@@ -1,22 +1,37 @@
 // server.js
 const express = require('express');
-const sequelize = require('./config/connection'); // Adjust the path as needed
+const exphbs = require('express-handlebars');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const dashboardRoutes = require('./routes/dashboardRoutes');
-const postRoutes = require('./routes/postRoutes');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Use session middleware
+const sequelize = require('./config/connection');
 
-// Use other middleware and configurations
+const sessionStore = new SequelizeStore({ db: sequelize });
 
-// Use the routes
-app.use('/dashboard', dashboardRoutes); // Example prefix for dashboard routes
-app.use('/posts', postRoutes); // Example prefix for post-related routes
+const routes = require('./routes'); // This will automatically look for an index.js inside /routes
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(
+  session({
+    secret: 'yourSecretKey',
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  })
+);
+
+app.use('/', routes);
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+  app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
 });
