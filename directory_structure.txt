@@ -1,0 +1,40 @@
+.
+├── LICENSE
+├── README.md
+├── config
+│   └── config.js
+├── controllers
+│   ├── authController.js
+│   ├── dashboardController.js
+│   ├── homeController.js
+│   └── postController.js
+├── migrations
+│   ├── 20240205045454-create-user.js
+│   └── 20240205053416-create-user.js
+├── models
+│   ├── index.js
+│   └── user.js
+├── package-lock.json
+├── package.json
+├── public
+│   └── CSS
+│       └── style.css
+├── routes
+│   ├── authRoutes.js
+│   └── postRoutes.js
+├── seed.js
+├── seeders
+├── server.js
+└── views
+    ├── dashboard.handlebars
+    ├── home.handlebars
+    ├── layouts
+    │   └── main.handlebars
+    ├── login.handlebars
+    ├── partials
+    │   ├── comment.handlebars
+    │   └── navbar.handlebars
+    ├── post.handlebars
+    └── signup.handlebars
+
+12 directories, 26 files
