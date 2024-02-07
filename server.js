@@ -1,8 +1,11 @@
 // server.js
+
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
-const routes = require('./routes'); // Import the index file from routes directory
+const postRoutes = require('./routes/postRoutes');
+const authRoutes = require('./routes/authRoutes');
+const { requireAuth } = require('./middleware/authMiddleware'); // Import the authentication middleware
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,19 +16,32 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Set up Handlebars.js engine with custom helpers
-const hbs = exphbs.create({ defaultLayout: 'main' }); // Create an instance of handlebars engine
+const hbs = exphbs.create({ defaultLayout: 'main' });
 app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars'); // Set handlebars as the view engine
+app.set('view engine', 'handlebars');
 
 // Set up sessions
 app.use(session({
   secret: 'super_secret_key',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: true
 }));
 
-// Use the routes defined in the routes directory
-app.use('/api', routes);
+// Use routes
+app.use('/api', postRoutes);
+app.use('/auth', authRoutes);
+
+// Define routes
+
+// Dashboard route - Display existing blog posts and options to add, update, or delete
+app.get('/dashboard', requireAuth, (req, res) => {
+  // Fetch and display existing blog posts for the current user
+  const userId = req.session.userId; // Assuming userId is stored in session after login
+  // Fetch blog posts from database based on userId
+  
+  // Render the dashboard page with fetched blog posts
+  res.render('dashboard', { posts: fetchedPosts });
+});
 
 // Start the server
 app.listen(PORT, () => {
