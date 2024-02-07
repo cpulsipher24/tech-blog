@@ -1,18 +1,30 @@
-{{!-- views/dashboard.handlebars --}}
-<h1>Welcome to the Dashboard</h1>
-<div class="create-post-form">
-  <form action="/api/posts" method="POST">
-    <input type="text" name="title" placeholder="Title">
-    <textarea name="content" placeholder="Content"></textarea>
-    <button type="submit">Create Post</button>
-  </form>
-</div>
-<div class="posts">
-  {{#each posts}}
-    <div class="post">
-      <h2>{{title}}</h2>
-      <p>{{content}}</p>
-      <p>Author: {{user.username}}</p>
-    </div>
-  {{/each}}
-</div>
+<!-- views/dashboard.handlebars -->
+<h1>Welcome to Your Dashboard</h1>
+
+<!-- Display existing blog posts -->
+{{#if posts.length}}
+  <h2>Your Blog Posts</h2>
+  <ul>
+    {{#each posts}}
+      <li>
+        <strong>{{title}}</strong>
+        <p>{{content}}</p>
+        <p>Created on: {{createdAt}}</p>
+        <form action="/api/posts/{{id}}?_method=DELETE" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+        <a href="/update/{{id}}">Update</a>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>You haven't created any blog posts yet.</p>
+{{/if}}
+
+<!-- Form to add a new blog post -->
+<h2>Add New Blog Post</h2>
+<form action="/api/posts" method="POST">
+  <input type="text" name="title" placeholder="Title">
+  <textarea name="content" placeholder="Content"></textarea>
+  <button type="submit">Create Post</button>
+</form>
