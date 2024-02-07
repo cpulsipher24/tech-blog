@@ -2,7 +2,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
-const routes = require('./routes'); // Import the main routes file
+const postRoutes = require('./routes/postRoutes'); // Import the post routes file
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,8 +23,8 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// Use the main routes file
-app.use(routes);
+// Use the post routes file
+app.use('/api', postRoutes);
 
 // Start the server
 app.listen(PORT, () => {
