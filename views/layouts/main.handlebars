@@ -1,12 +1,14 @@
+<!-- views/layouts/main.handlebars -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{block "title"}}My Website{{/block}}</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>My Website</title>
+    <!-- Add your CSS links or any other common head elements here -->
 </head>
 <body>
-    {{block "content"}}{{/block}}
+    {{{body}}} <!-- This is where the content from child templates will be injected -->
 </body>
 </html>

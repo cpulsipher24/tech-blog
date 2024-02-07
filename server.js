@@ -13,8 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Set up Handlebars.js engine with custom helpers
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
+const hbs = exphbs.create({ defaultLayout: 'main' }); // Create an instance of handlebars engine
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars'); // Set handlebars as the view engine
 
 // Set up sessions
 app.use(session({
@@ -25,6 +26,11 @@ app.use(session({
 
 // Use the post routes file
 app.use('/api', postRoutes);
+
+// Define a route handler for the homepage
+app.get('/', (req, res) => {
+  res.render('home'); // Assuming you have a 'home.handlebars' file in your views directory
+});
 
 // Start the server
 app.listen(PORT, () => {
