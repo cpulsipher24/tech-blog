@@ -2,7 +2,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
-const postRoutes = require('./routes/postRoutes'); // Import the post routes file
+const routes = require('./routes'); // Import the index file from routes directory
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -24,13 +24,8 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// Use the post routes file
-app.use('/api', postRoutes);
-
-// Define a route handler for the homepage
-app.get('/', (req, res) => {
-  res.render('home'); // Assuming you have a 'home.handlebars' file in your views directory
-});
+// Use the routes defined in the routes directory
+app.use('/api', routes);
 
 // Start the server
 app.listen(PORT, () => {

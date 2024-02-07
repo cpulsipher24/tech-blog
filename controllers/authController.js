@@ -1,55 +1,49 @@
+// controllers/authController.js
+
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 const authController = {
+  // User signup
   signup: async (req, res) => {
     try {
-      const { username, email, password } = req.body;
-
-      // Hash the password before storing it
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Create a new user in the database
-      const newUser = await User.create({
-        username,
-        email,
-        password: hashedPassword, // Store the hashed password
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const user = await User.create({
+        username: req.body.username,
+        password: hashedPassword,
       });
-
-      // Respond with the newly created user
-      res.json(newUser);
+      req.session.user = user;
+      res.status(201).json({ message: 'User created successfully', user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ message: 'Failed to create user' });
     }
   },
 
+  // User login
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;
-
-      // Find the user by their email
-      const user = await User.findOne({ where: { email } });
-
-      // If user not found or password doesn't match, respond with an error
-      if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+      const user = await User.findOne({ where: { username: req.body.username } });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
       }
-
-      // Set user session or token here
-
-      res.json({ message: 'Login successful' });
+      const validPassword = await bcrypt.compare(req.body.password, user.password);
+      if (!validPassword) {
+        return res.status(401).json({ message: 'Invalid password' });
+      }
+      req.session.user = user;
+      res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ message: 'Failed to log in' });
     }
   },
 
+  // User logout
   logout: (req, res) => {
-    // Clear user session or token here
-
-    res.json({ message: 'Logout successful' });
-  },
+    req.session.destroy();
+    res.status(200).json({ message: 'Logout successful' });
+  }
 };
 
 module.exports = authController;
