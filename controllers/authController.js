@@ -41,9 +41,17 @@ const authController = {
 
   // User logout
   logout: (req, res) => {
-    req.session.destroy();
-    res.status(200).json({ message: 'Logout successful' });
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        res.status(500).json({ error: 'Internal server error' });
+      } else {
+        // Redirect the user to the homepage or any other desired page after logout
+        res.redirect('/');
+      }
+    });
   }
 };
 
 module.exports = authController;
+
