@@ -1,14 +1,7 @@
-{{!-- views/home.handlebars --}}
-{{#each posts}}
-  <div class="post">
-    <h2>{{title}}</h2>
-    <p>{{content}}</p>
-    <p>Author: {{user.username}}</p>
-    {{#each comments}}
-      <div class="comment">
-        <p>{{content}}</p>
-        <p>Comment by: {{user.username}}</p>
-      </div>
-    {{/each}}
-  </div>
-{{/each}}
+{{extend "layouts/main"}}
+{{#block "title"}}Home{{/block}}
+
+{{#block "content"}}
+    <h1>Welcome to My Website</h1>
+    <p>This is the home page content.</p>
+{{/block}}
