@@ -1,0 +1,14 @@
+{{!-- views/home.handlebars --}}
+{{#each posts}}
+  <div class="post">
+    <h2>{{title}}</h2>
+    <p>{{content}}</p>
+    <p>Author: {{user.username}}</p>
+    {{#each comments}}
+      <div class="comment">
+        <p>{{content}}</p>
+        <p>Comment by: {{user.username}}</p>
+      </div>
+    {{/each}}
+  </div>
+{{/each}}
