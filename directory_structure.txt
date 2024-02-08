@@ -21,6 +21,7 @@
 │       └── style.css
 ├── routes
 │   ├── authRoutes.js
+│   ├── index.js
 │   └── postRoutes.js
 ├── seed.js
 ├── seeders
@@ -37,4 +38,4 @@
     ├── post.handlebars
     └── signup.handlebars
 
-12 directories, 26 files
+12 directories, 27 files
