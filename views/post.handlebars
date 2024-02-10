@@ -1,21 +1,19 @@
-{{!-- views/post.handlebars --}}
-<div class="post">
-  <h2>{{post.title}}</h2>
-  <p>{{post.content}}</p>
-  <p>Author: {{post.user.username}}</p>
-</div>
-<div class="comments">
-  <h3>Comments</h3>
-  <div class="comment-form">
-    <form action="/api/posts/{{post.id}}/comments" method="POST">
-      <textarea name="content" placeholder="Add a comment"></textarea>
-      <button type="submit">Comment</button>
-    </form>
+<!-- views/post.handlebars -->
+
+{{#if post}}
+  <div class="post">
+    <h2>{{post.title}}</h2>
+    <p>{{post.content}}</p>
+    <p>Posted by {{post.User.username}} on {{post.createdAt}}</p>
   </div>
-  {{#each post.comments}}
+
+  <h3>Comments</h3>
+  {{#each post.Comments}}
     <div class="comment">
-      <p>{{content}}</p>
-      <p>Comment by: {{user.username}}</p>
+      <p>{{this.content}}</p>
+      <p>Comment by {{this.User.username}} on {{this.createdAt}}</p>
     </div>
   {{/each}}
-</div>
+{{else}}
+  <p>Post not found</p>
+{{/if}}
