@@ -35,8 +35,9 @@ app.use('/auth', authRoutes);
 
 // Route for the root URL
 app.get('/', (req, res) => {
-  // You can render a homepage or redirect to another page here
-  res.send('Welcome to my app!');
+  // Render the homepage with navigation links based on authentication status
+  const isAuthenticated = req.session && req.session.user;
+  res.render('home', { isAuthenticated });
 });
 
 // Dashboard route - Display existing blog posts and options to add, update, or delete
