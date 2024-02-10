@@ -1,7 +1,8 @@
+// server.js
+
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
-const methodOverride = require('method-override'); // Require method-override module
 const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
 const { requireAuth } = require('./middleware/authMiddleware');
@@ -13,7 +14,6 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-app.use(methodOverride('_method')); // Use method-override middleware
 
 // Set up Handlebars.js engine with custom helpers
 const hbs = exphbs.create({ defaultLayout: 'main' });
@@ -24,7 +24,9 @@ app.set('view engine', 'handlebars');
 app.use(session({
   secret: 'super_secret_key',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  // Set session expiration (optional)
+  cookie: { maxAge: 3600000 } // 1 hour in milliseconds
 }));
 
 // Use routes
@@ -45,8 +47,20 @@ app.get('/dashboard', requireAuth, (req, res) => {
   // Fetch and display existing blog posts for the current user
   const userId = req.session.userId; // Assuming userId is stored in session after login
   // Fetch blog posts from database based on userId
-  const fetchedPosts = []; // Placeholder for fetched posts
+  
+  // Render the dashboard page with fetched blog posts
   res.render('dashboard', { posts: fetchedPosts });
+});
+
+// Log out route - Clear session
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.redirect('/');
+  });
 });
 
 // Start the server
