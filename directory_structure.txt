@@ -8,6 +8,8 @@
 │   ├── dashboardController.js
 │   ├── homeController.js
 │   └── postController.js
+├── middleware
+│   └── authMiddleware.js
 ├── migrations
 │   ├── 20240205045454-create-user.js
 │   └── 20240205053416-create-user.js
@@ -38,4 +40,4 @@
     ├── post.handlebars
     └── signup.handlebars
 
-12 directories, 27 files
+13 directories, 28 files

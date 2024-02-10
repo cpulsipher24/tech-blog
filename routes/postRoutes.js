@@ -1,7 +1,11 @@
+// routes/postRoutes.js
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
-const { requireAuth } = require('../middleware/authMiddleware');
+const requireAuth = require('../middleware/authMiddleware').requireAuth;
+
+// Route to display the homepage with existing blog posts
+router.get('/', postController.getHomepage);
 
 // Route to get all blog posts
 router.get('/', postController.getAllPosts);

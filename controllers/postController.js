@@ -51,6 +51,25 @@ const postController = {
       console.error('Error creating comment:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
+  },
+
+  // Controller function to display an individual blog post and its comments
+  getPostWithComments: async (req, res) => {
+    try {
+      const postId = req.params.id;
+      const post = await Post.findByPk(postId, {
+        include: [Comment] // Include the Comment model to fetch associated comments
+      });
+
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+
+      res.status(200).json(post);
+    } catch (error) {
+      console.error('Error fetching post with comments:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
 };
 

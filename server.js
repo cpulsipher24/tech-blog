@@ -5,7 +5,7 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
-const { requireAuth } = require('./middleware/authMiddleware'); // Import the authentication middleware
+const { requireAuth } = require('./middleware/authMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -32,6 +32,12 @@ app.use('/api', postRoutes);
 app.use('/auth', authRoutes);
 
 // Define routes
+
+// Route for the root URL
+app.get('/', (req, res) => {
+  // You can render a homepage or redirect to another page here
+  res.send('Welcome to my app!');
+});
 
 // Dashboard route - Display existing blog posts and options to add, update, or delete
 app.get('/dashboard', requireAuth, (req, res) => {
