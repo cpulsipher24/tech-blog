@@ -53,13 +53,21 @@ const postController = {
     }
   },
 
-  // Controller function to display the homepage with existing blog posts
-  getHomepage: async (req, res) => {
+  // Controller function to display an individual blog post and its comments
+  getPostWithComments: async (req, res) => {
     try {
-      const posts = await Post.findAll();
-      res.status(200).render('homepage', { posts });
+      const postId = req.params.id;
+      const post = await Post.findByPk(postId, {
+        include: [{ model: Comment, include: User }] // Include comments with their associated users
+      });
+
+      if (!post) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+
+      res.status(200).json(post);
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error('Error fetching post with comments:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   }

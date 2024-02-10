@@ -1,8 +1,7 @@
-// server.js
-
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const methodOverride = require('method-override'); // Require method-override module
 const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
 const { requireAuth } = require('./middleware/authMiddleware');
@@ -14,6 +13,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(methodOverride('_method')); // Use method-override middleware
 
 // Set up Handlebars.js engine with custom helpers
 const hbs = exphbs.create({ defaultLayout: 'main' });
@@ -45,8 +45,7 @@ app.get('/dashboard', requireAuth, (req, res) => {
   // Fetch and display existing blog posts for the current user
   const userId = req.session.userId; // Assuming userId is stored in session after login
   // Fetch blog posts from database based on userId
-  
-  // Render the dashboard page with fetched blog posts
+  const fetchedPosts = []; // Placeholder for fetched posts
   res.render('dashboard', { posts: fetchedPosts });
 });
 
