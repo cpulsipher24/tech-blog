@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
@@ -48,10 +46,9 @@ app.get('/', (req, res) => {
 
 // Dashboard route - Display existing blog posts and options to add, update, or delete
 app.get('/dashboard', requireAuth, (req, res) => {
-  // Fetch and display existing blog posts for the current user
-  const userId = req.session.userId; // Assuming userId is stored in session after login
-  // Fetch blog posts from database based on userId
-  
+  // Placeholder comment: Add logic to fetch existing blog posts for the current user
+  const fetchedPosts = []; // Placeholder for fetched posts
+
   // Render the dashboard page with fetched blog posts
   res.render('dashboard', { posts: fetchedPosts });
 });

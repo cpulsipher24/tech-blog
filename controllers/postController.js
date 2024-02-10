@@ -70,6 +70,17 @@ const postController = {
       console.error('Error fetching post with comments:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
+  },
+
+  // Controller function to get the homepage
+  getHomepage: async (req, res) => {
+    try {
+      // Logic to fetch data for the homepage
+      res.status(200).send('Homepage');
+    } catch (error) {
+      console.error('Error fetching homepage:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
 };
 

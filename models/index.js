@@ -1,5 +1,4 @@
 // models/index.js
-
 'use strict';
 
 const fs = require('fs');
@@ -28,7 +27,7 @@ fs
     );
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes); // Pass sequelize instance here
     db[model.name] = model;
   });
 
