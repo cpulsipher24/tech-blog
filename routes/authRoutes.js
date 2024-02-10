@@ -1,16 +1,15 @@
 // routes/authRoutes.js
-
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 
-// Sign up route
+// Route to handle user signup
 router.post('/signup', authController.signup);
 
-// Log in route
+// Route to handle user login
 router.post('/login', authController.login);
 
-// Log out route
-router.get('/logout', authController.logout);
+// Route to handle user logout
+router.post('/logout', authController.logout);
 
 module.exports = router;

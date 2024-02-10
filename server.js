@@ -5,6 +5,7 @@ const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
 const sessionTimeout = require('./middleware/sessionTimeout');
 const { requireAuth } = require('./middleware/authMiddleware');
+const authController = require('./controllers/authController'); // Import authController
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -63,6 +64,20 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
+
+// Login route - Display login form or handle login POST request
+app.get('/login', (req, res) => {
+  res.render('login'); // Render the login form
+});
+
+app.post('/login', authController.login); // Handle login POST request
+
+// Signup route - Display signup form or handle signup POST request
+app.get('/signup', (req, res) => {
+  res.render('signup'); // Render the signup form
+});
+
+app.post('/signup', authController.signup); // Handle signup POST request
 
 // Start the server
 app.listen(PORT, () => {

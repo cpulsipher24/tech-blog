@@ -81,6 +81,28 @@ const postController = {
       console.error('Error fetching homepage:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
+  },
+
+  // Controller function to display the login page
+  getLoginPage: async (req, res) => {
+    try {
+      // Logic to render the login page
+      res.status(200).send('Login Page');
+    } catch (error) {
+      console.error('Error fetching login page:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
+  // Controller function to display the signup page
+  getSignupPage: async (req, res) => {
+    try {
+      // Logic to render the signup page
+      res.status(200).send('Signup Page');
+    } catch (error) {
+      console.error('Error fetching signup page:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
 };
 
