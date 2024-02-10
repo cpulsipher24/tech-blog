@@ -5,10 +5,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <!-- Add your CSS links or any other common head elements here -->
+    <title>Tech Blog</title>
+    <link rel="stylesheet" href="/CSS/style.css">
 </head>
 <body>
-    {{{body}}} <!-- This is where the content from child templates will be injected -->
+    <header>
+        <!-- Navigation bar -->
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                {{#if isAuthenticated}}
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                {{else}}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                {{/if}}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Main content will be rendered dynamically -->
+        {{{body}}}
+    </main>
+    <footer>
+        <!-- Footer content -->
+    </footer>
 </body>
 </html>

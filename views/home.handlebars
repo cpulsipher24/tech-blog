@@ -1,7 +1,35 @@
-<!-- views/home.handlebars -->
+<!-- views/home.handlebars or views/homepage.handlebars -->
 
-{{!< layouts/main }}
-
-<!-- Your homepage content goes here -->
-<h1>Welcome to My Website</h1>
-<p>This is the homepage content.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Blog</title>
+    <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+    <header>
+        <!-- Navigation bar -->
+        {{> navbar}}
+    </header>
+    <main>
+        <section class="posts">
+            <h2>Latest Blog Posts</h2>
+            <ul>
+                {{#each posts}}
+                <li>
+                    <h3>{{title}}</h3>
+                    <p>{{content}}</p>
+                    <p>Created by: {{creator}}</p>
+                    <p>Created at: {{createdAt}}</p>
+                </li>
+                {{/each}}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>
