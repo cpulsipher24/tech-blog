@@ -33,19 +33,14 @@ fs
   });
 
 // Define associations between models
-const { User, Post, Comment } = db;
+Object.values(db).forEach(model => {
+  if (model.associate) {
+    model.associate(db);
+  }
+});
 
-// Example associations:
-// A post can have many comments
-Post.hasMany(Comment);
-// A comment belongs to a post
-Comment.belongsTo(Post);
-
-// Add models and Sequelize instance to db object
+// Add Sequelize instance to db object
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.User = User;
-db.Post = Post;
-db.Comment = Comment;
 
 module.exports = db;

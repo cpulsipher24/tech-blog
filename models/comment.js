@@ -1,8 +1,8 @@
 // models/comment.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const db = require('./index');
 
-const Comment = sequelize.define('Comment', {
+const Comment = db.sequelize.define('Comment', {
   content: {
     type: DataTypes.TEXT,
     allowNull: false

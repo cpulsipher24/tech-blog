@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const session = require('express-session');
 const postRoutes = require('./routes/postRoutes');
 const authRoutes = require('./routes/authRoutes');
+const sessionTimeout = require('./middleware/sessionTimeout');
 const { requireAuth } = require('./middleware/authMiddleware');
 
 const app = express();
@@ -28,6 +29,9 @@ app.use(session({
   // Set session expiration (optional)
   cookie: { maxAge: 3600000 } // 1 hour in milliseconds
 }));
+
+// Use session timeout middleware
+app.use(sessionTimeout(3600000)); // 1 hour in milliseconds
 
 // Use routes
 app.use('/api', postRoutes);

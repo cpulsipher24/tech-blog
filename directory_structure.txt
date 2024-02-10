@@ -9,12 +9,15 @@
 │   ├── homeController.js
 │   └── postController.js
 ├── middleware
-│   └── authMiddleware.js
+│   ├── authMiddleware.js
+│   └── sessionTimeout.js
 ├── migrations
 │   ├── 20240205045454-create-user.js
 │   └── 20240205053416-create-user.js
 ├── models
+│   ├── comment.js
 │   ├── index.js
+│   ├── post.js
 │   └── user.js
 ├── package-lock.json
 ├── package.json
@@ -40,4 +43,4 @@
     ├── post.handlebars
     └── signup.handlebars
 
-13 directories, 28 files
+13 directories, 31 files
